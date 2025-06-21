@@ -33,13 +33,15 @@ class TestRoutes(TestCase):
                 self.reader,
                 HTTPStatus.NOT_FOUND
             ),
+            ('notes:detail', (self.note.slug,), None, HTTPStatus.FOUND),
             ('notes:list', None, self.author, HTTPStatus.OK),
             ('notes:list', None, None, HTTPStatus.FOUND),
+            ('notes:add', None, self.author, HTTPStatus.OK),
+            ('notes:add', None, None, HTTPStatus.FOUND),
+            ('notes:done', None, self.author, HTTPStatus.OK),
             ('users:login', None, None, HTTPStatus.OK),
             ('users:logout', None, self.author, HTTPStatus.OK),
             ('users:signup', None, None, HTTPStatus.OK),
-            ('notes:add', None, self.author, HTTPStatus.OK),
-            ('notes:add', None, None, HTTPStatus.FOUND),
         )
 
         for name, args, user, expected_status in urls:
