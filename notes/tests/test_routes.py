@@ -106,11 +106,10 @@ class NotesRoutesAccessTests(TestCase):
             'notes:delete',
         ]
         for name in pages:
-            args = args = (
-                (self.note.slug,)
-                if name in ('detail', 'edit', 'delete')
-                else None
-            )
+            if any(action in name for action in ('detail', 'edit', 'delete')):
+                args = (self.note.slug,)
+            else:
+                args = None
             with self.subTest(page=name):
                 url = reverse(name, args=args) if args else reverse(name)
                 response = self.client.get(url)

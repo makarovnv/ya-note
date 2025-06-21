@@ -1,7 +1,6 @@
-
+from django.contrib.auth import get_user_model
 from django.test import TestCase, Client
 from django.urls import reverse
-from django.contrib.auth import get_user_model
 
 from pytils.translit import slugify
 
@@ -62,7 +61,10 @@ class NotesLogicTests(TestCase):
         url = reverse('notes:add')
         data = {'title': 'Auto Slug Title', 'text': 'Text', 'slug': ''}
         response = self.author_client.post(url, data)
-        note = Note.objects.filter(title='Auto Slug Title', author=self.author).first()
+        note = Note.objects.filter(
+            title='Auto Slug Title',
+            author=self.author
+        ).first()
         self.assertIsNotNone(note)
         self.assertEqual(
             note.slug,
